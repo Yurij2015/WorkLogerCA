@@ -10,7 +10,6 @@ namespace WorkLogerCA.Models
     {
         public Request()
         {
-            Equipment = new HashSet<Equipment>();
             CreationDateTime = DateTime.UtcNow;
         }
 
@@ -59,7 +58,7 @@ namespace WorkLogerCA.Models
         [Display(Name = "Выполнение заявки")]
         public bool RequestState { get; set; }
 
-        public virtual ICollection<Equipment> Equipment { get; set; }
+        public List<Equipment> Equipments { get; set; } = new();
 
 
     }

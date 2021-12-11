@@ -39,8 +39,8 @@ namespace WorkLogerCA.Models
         public bool WorkCompletiting { get; set; }
 
         public int TransportId { get; set; }
-
-        [Display(Name = "Транспортрное средство")]
-        public virtual Transport Transport { get; set; } = null!;
+        [Display(Name = "Транспортное средство")]
+        public Transport? Transport { get; set; }
+       
     }
 }

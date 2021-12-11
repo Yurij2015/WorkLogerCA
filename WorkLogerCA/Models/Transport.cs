@@ -9,8 +9,7 @@ namespace WorkLogerCA.Models
     {
         public Transport()
         {
-            Equipment = new HashSet<Equipment>();
-            ExecutionOfWork = new HashSet<Work>();
+           
             CreationDateTime = DateTime.UtcNow;
 
         }
@@ -54,7 +53,8 @@ namespace WorkLogerCA.Models
         [Display(Name = "Примечение")]
         public string? Note { get; set; }
 
-        public virtual ICollection<Equipment> Equipment { get; set; }
-        public virtual ICollection<Work> ExecutionOfWork { get; set; }
+        public List<Equipment> Equipments { get; set; } = new();
+
+        public List<Work> Works { get; set; } = new();
     }
 }
