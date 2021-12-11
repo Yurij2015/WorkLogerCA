@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using WorkLogerCA.Models;
 
 namespace WorkLogerCA.Controllers
@@ -21,8 +22,41 @@ namespace WorkLogerCA.Controllers
         }
 
         // GET: Works
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string ExcelExport)
         {
+
+            var equipments = await _context.Work.Include(t =>t.Transport).ToListAsync();
+
+            var recordsToDisplay = equipments.Select(x => new
+            {
+                Дата_и_время_создания = x.CreationDateTime.GetDateTimeFormats('G'),
+                Исполнители_работ = x.PerformersOfWork,
+                Дата_завершения_работ = x.CompletionDate.GetDateTimeFormats('G'),
+                Описание_выполненных_работ = x.DescriptionOfPerformedWork,
+                Примечение = x.Note,
+                Место_выполнения_работ = x.PlaceOfWork,
+                Выполнение_работы = x.WorkCompletiting,
+                Транспортное_средство = x.Transport?.Note,          
+            }).ToList();
+
+            if (ExcelExport != null)
+            {
+                // above code loads the data using LINQ with EF (query of table), you can substitute this with any data source.
+                var stream = new MemoryStream();
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                using (var package = new ExcelPackage(stream))
+                {
+                    var workSheet = package.Workbook.Worksheets.Add("Работа");
+                    workSheet.Cells.LoadFromCollection(recordsToDisplay, true);
+                    package.Save();
+                }
+                stream.Position = 0;
+                string excelName = $"Works-{DateTime.Now:ddMMyyyyHHmmssfff}.xlsx";
+                // above I define the name of the file using the current datetime.
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+                // this will be the actual export.
+            }
+
             var applicationDbContext = _context.Work.Include(w => w.Transport);
             return View(await applicationDbContext.ToListAsync());
         }
