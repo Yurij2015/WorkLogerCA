@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WorkLogerCA.Models
 {
@@ -53,13 +54,12 @@ namespace WorkLogerCA.Models
 
         [Display(Name = "Транспортное средство")]
         public int TransportId { get; set; }
+        [Display(Name = "Транспортное средство")]
+        public Transport? Transport { get; set; }
 
         [Display(Name = "Заявка")]
         public int RequestId { get; set; }
-
-        [Display(Name = "Транспортное средство")]
-        public virtual Transport Transport { get; set; } = null!;
         [Display(Name = "Заявка")]
-        public virtual Request Request { get; set; } = null!;
+        public Request? Request { get; set; }
     }
 }

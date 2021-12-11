@@ -9,6 +9,7 @@ using WorkLogerCA.Models;
 
 namespace WorkLogerCA.Controllers
 {
+    [Microsoft.AspNetCore.Authorization.Authorize]
     public class EquipmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
