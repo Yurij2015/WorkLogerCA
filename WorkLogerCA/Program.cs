@@ -12,6 +12,9 @@ var connectionString = builder.Configuration.GetConnectionString("MySQLConnectio
 builder.Services.AddDbContext<UserContext>(options =>
     options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 19))));
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 19))));
+
 // Set auth
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

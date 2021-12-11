@@ -1,0 +1,77 @@
+﻿@model IEnumerable<WorkLogerCA.Models.Work>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerformersOfWork)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompletionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptionOfPerformedWork)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceOfWork)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkCompletiting)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transport)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PerformersOfWork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompletionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescriptionOfPerformedWork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceOfWork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkCompletiting)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transport.Destination)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

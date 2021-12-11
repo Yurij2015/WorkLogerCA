@@ -1,0 +1,69 @@
+﻿@model WorkLogerCA.Models.Work
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Work</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="CreationDateTime" class="control-label"></label>
+                <input asp-for="CreationDateTime" class="form-control" />
+                <span asp-validation-for="CreationDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PerformersOfWork" class="control-label"></label>
+                <input asp-for="PerformersOfWork" class="form-control" />
+                <span asp-validation-for="PerformersOfWork" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompletionDate" class="control-label"></label>
+                <input asp-for="CompletionDate" class="form-control" />
+                <span asp-validation-for="CompletionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescriptionOfPerformedWork" class="control-label"></label>
+                <input asp-for="DescriptionOfPerformedWork" class="form-control" />
+                <span asp-validation-for="DescriptionOfPerformedWork" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <input asp-for="Note" class="form-control" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlaceOfWork" class="control-label"></label>
+                <input asp-for="PlaceOfWork" class="form-control" />
+                <span asp-validation-for="PlaceOfWork" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="WorkCompletiting" /> @Html.DisplayNameFor(model => model.WorkCompletiting)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportId" class="control-label"></label>
+                <select asp-for="TransportId" class="form-control" asp-items="ViewBag.TransportId"></select>
+                <span asp-validation-for="TransportId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

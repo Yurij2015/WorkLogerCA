@@ -1,0 +1,107 @@
+﻿@model IEnumerable<WorkLogerCA.Models.Request>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreationDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberDrillingCrew)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceOfWork)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SendResult)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RepeatedRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTimeSendRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompletedRequest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContractorNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestState)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberDrillingCrew)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceOfWork)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SendResult)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepeatedRequest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTimeSendRequest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompletedRequest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContractorNote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestState)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
