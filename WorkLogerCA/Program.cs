@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using WorkLogerCA.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("MySQLConnection");
+
+builder.Services.AddDbContext<UserContext>(options =>
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 19))));
+
 
 var app = builder.Build();
 
