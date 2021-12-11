@@ -1,16 +1,28 @@
 ﻿@model IEnumerable<WorkLogerCA.Models.Request>
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Заявки";
 }
+<hr/>
+<form>
+    <div class="row">
+        <h2>Поиск заявки:</h2>
+        <div class="col-md-10">
+            <input type="text" class="form-control" id="email" placeholder="Введите данные заявки">
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success right" style="width: 100%">Найти заявку</button>
+        </div>
+    </div>
+</form>
+<hr/>
 
-<h1>Index</h1>
+<h1>Заявки</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+   <a asp-action="Create" class="btn btn-warning">Добавить запись</a>
 </p>
-<table class="table">
-    <thead>
+<div class="table-responsive">
+    <table class="table table-striped">    <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.CreationDateTime)
@@ -97,11 +109,14 @@
                 @Html.DisplayFor(modelItem => item.RequestState)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" style="width: 100%">Редактировать</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning mt-1" style="width: 100%">Удалить</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>
+<form method="post">
+    <input type="submit" class="btn btn-primary mt-3" name="ExcelExport" value="Экспорт Excel" style="width: 30%">
+</form>

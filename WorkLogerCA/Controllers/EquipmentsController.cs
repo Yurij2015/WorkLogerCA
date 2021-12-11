@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using WorkLogerCA.Models;
 
 namespace WorkLogerCA.Controllers
@@ -20,8 +21,46 @@ namespace WorkLogerCA.Controllers
         }
 
         // GET: Equipments
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string ExcelExport)
         {
+
+            var equipments = await _context.Equipment.Include(t => t.Transport).Include(r => r.Request).ToListAsync();
+
+            var recordsToDisplay = equipments.Select(x => new
+            {
+                Дата_и_время_создания = x.CreationDateTime.GetDateTimeFormats('G'),
+                Наименование_оборудовнаия = x.EquipmentIdentification,
+                Заводской_номер = x.FactoryNumber,
+                Количество = x.Count,
+                Состояние = x.State,
+                Откуда_отправлено = x.SentFrom,
+                Место_расположения = x.Location,
+                Дата_и_время_прибытия = x.ArrivalDateTime?.GetDateTimeFormats('G'),
+                Дата_время_отправления = x.DepartureDateTime?.GetDateTimeFormats('G'),
+                Документы = x.Document,
+                Действие_свидетельства_о_поверке = x.CertificateExpiryDate.GetDateTimeFormats('G'),
+                Транспортное_средство = x.Transport?.Note,
+                Заявка = x.Request?.Note
+            }).ToList();
+
+            if (ExcelExport != null)
+            {
+                // above code loads the data using LINQ with EF (query of table), you can substitute this with any data source.
+                var stream = new MemoryStream();
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                using (var package = new ExcelPackage(stream))
+                {
+                    var workSheet = package.Workbook.Worksheets.Add("Оборудование");
+                    workSheet.Cells.LoadFromCollection(recordsToDisplay, true);
+                    package.Save();
+                }
+                stream.Position = 0;
+                string excelName = $"Equipments-{DateTime.Now:ddMMyyyyHHmmssfff}.xlsx";
+                // above I define the name of the file using the current datetime.
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
+                // this will be the actual export.
+            }
+
             var applicationDbContext = _context.Equipment.Include(e => e.Request).Include(e => e.Transport);
             return View(await applicationDbContext.ToListAsync());
         }

@@ -3,11 +3,24 @@
 @{
     ViewData["Title"] = "Index";
 }
+<hr /> 
+<form>
+  <div class="row">
+      <h2>Поиск транспортного средства:</h2>
+    <div class="col-md-10">
+      <input type="text" class="form-control" id="email" placeholder="Введите данные транспортного средтсва">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-success right" style="width: 100%">Найти запись</button>
+    </div>
+  </div>
+</form> 
+<hr />
 
-<h1>Index</h1>
+<h1>Транспортные средства</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+     <a asp-action="Create" class="btn btn-warning">Добавить запись</a>
 </p>
 <table class="table">
     <thead>
@@ -85,11 +98,13 @@
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" style="width: 100%">Редактировать</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning mt-1" style="width: 100%">Удалить</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<form method="post">
+    <input type="submit" class="btn btn-primary mt-3" name="ExcelExport" value="Экспорт Excel" style="width: 30%">
+</form>
