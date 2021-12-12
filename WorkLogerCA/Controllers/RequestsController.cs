@@ -69,6 +69,7 @@ namespace WorkLogerCA.Controllers
                 return View(requests.Where(r => r.RequestNumber.Contains(search) 
                 || r.Note.Contains(search) 
                 || r.RequestDescription.Contains(search)
+                || r.NumberDrillingCrew.ToString().Contains(search)
                 || r.PlaceOfWork.Contains(search)
                 || r.RepeatedRequest.Contains(search)
                 || r.ContractorNote.Contains(search)

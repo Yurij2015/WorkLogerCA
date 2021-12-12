@@ -22,7 +22,7 @@ namespace WorkLogerCA.Controllers
         }
 
         // GET: Transports
-        public async Task<IActionResult> Index(string ExcelExport)
+        public async Task<IActionResult> Index(string ExcelExport, string search)
         {
             var transport = await _context.Transport.ToListAsync();
 
@@ -57,6 +57,20 @@ namespace WorkLogerCA.Controllers
                 // above I define the name of the file using the current datetime.
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
                 // this will be the actual export.
+            }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var transports = from r in _context.Transport select r;
+                return View(transports.Where(r => r.DriverFullName.Contains(search)
+                || r.DirectRide.Contains(search)
+                || r.ReturnRide.Contains(search)
+                || r.WaybillNumber.ToString().Contains(search)
+                || r.Destination.Contains(search)
+                || r.ReturnDestination.Contains(search)
+                || r.Passengers.Contains(search)
+                || r.Note.Contains(search)
+                ));
             }
 
             return View(await _context.Transport.ToListAsync());

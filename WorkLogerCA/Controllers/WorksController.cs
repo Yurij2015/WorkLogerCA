@@ -22,12 +22,12 @@ namespace WorkLogerCA.Controllers
         }
 
         // GET: Works
-        public async Task<IActionResult> Index(string ExcelExport)
+        public async Task<IActionResult> Index(string ExcelExport, string search)
         {
 
-            var equipments = await _context.Work.Include(t =>t.Transport).ToListAsync();
+            var work = await _context.Work.Include(t =>t.Transport).ToListAsync();
 
-            var recordsToDisplay = equipments.Select(x => new
+            var recordsToDisplay = work.Select(x => new
             {
                 Дата_и_время_создания = x.CreationDateTime.GetDateTimeFormats('G'),
                 Исполнители_работ = x.PerformersOfWork,
@@ -55,6 +55,17 @@ namespace WorkLogerCA.Controllers
                 // above I define the name of the file using the current datetime.
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
                 // this will be the actual export.
+            }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var works = from r in _context.Work select r;
+                return View(works.Where(r => r.PerformersOfWork.Contains(search)
+                || r.DescriptionOfPerformedWork.Contains(search)
+                || r.Note.Contains(search)
+                || r.PlaceOfWork.Contains(search)
+                || r.Note.Contains(search)
+                ).Include(w => w.Transport));
             }
 
             var applicationDbContext = _context.Work.Include(w => w.Transport);

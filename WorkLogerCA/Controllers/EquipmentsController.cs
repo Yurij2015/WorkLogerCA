@@ -21,7 +21,7 @@ namespace WorkLogerCA.Controllers
         }
 
         // GET: Equipments
-        public async Task<IActionResult> Index(string ExcelExport)
+        public async Task<IActionResult> Index(string ExcelExport, string search)
         {
 
             var equipments = await _context.Equipment.Include(t => t.Transport).Include(r => r.Request).ToListAsync();
@@ -60,6 +60,20 @@ namespace WorkLogerCA.Controllers
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
                 // this will be the actual export.
             }
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var equipment = from r in _context.Equipment select r;
+                return View(equipment.Where(r => r.EquipmentIdentification.Contains(search)
+                || r.FactoryNumber.Contains(search)
+                || r.State.Contains(search)
+                || r.Count.ToString().Contains(search)
+                || r.SentFrom.Contains(search)
+                || r.Location.Contains(search)
+                || r.Document.Contains(search)
+                ).Include(e => e.Request).Include(e => e.Transport));
+            }
+
 
             var applicationDbContext = _context.Equipment.Include(e => e.Request).Include(e => e.Transport);
             return View(await applicationDbContext.ToListAsync());
