@@ -5,12 +5,12 @@
   <div class="mb-3">
     <label  asp-for="Email" class="form-label">Электронный адрес</label>
     <input type="text" asp-for="Email" class="form-control" />
-     <span asp-validation-for="Email" />
+    <span asp-validation-for="Email" />
   </div>
   <div class="mb-3">
     <label asp-for="Password" class="form-label">Пароль</label>
-       <input asp-for="Password" class="form-control" />
-       <span asp-validation-for="Password" />  </div>
+     <input asp-for="Password" class="form-control" />
+    <span asp-validation-for="Password" />  </div>
   <button type="submit" type="submit" class="btn btn-primary">Войти</button>
   <a asp-action="Register" class="btn btn-warning" asp-controller="Account">Регистрация</a>
 </form>
