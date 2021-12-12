@@ -3,14 +3,14 @@
     ViewData["Title"] = "Заявки";
 }
 <hr/>
-<form>
+<form ethod="post" asp-controller="Requests" asp-action="Index">
     <div class="row">
         <h2>Поиск заявки:</h2>
         <div class="col-md-10">
-            <input type="text" class="form-control" id="email" placeholder="Введите данные заявки">
+            <input type="text" class="form-control" name="search" placeholder="Введите данные заявки">
         </div>
         <div class="col-md-2">
-            <button class="btn btn-success right" style="width: 100%">Найти заявку</button>
+            <button class="btn btn-success right" type="submit" style="width: 100%">Найти заявку</button>
         </div>
     </div>
 </form>

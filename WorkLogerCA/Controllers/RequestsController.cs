@@ -22,7 +22,7 @@ namespace WorkLogerCA.Controllers
         }
 
         // GET: Requests
-        public async Task<IActionResult> Index(string ExcelExport)
+        public async Task<IActionResult> Index(string ExcelExport, string search)
         {
 
             var request = await _context.Request.ToListAsync();
@@ -60,6 +60,19 @@ namespace WorkLogerCA.Controllers
                 // above I define the name of the file using the current datetime.
                 return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
                 // this will be the actual export.
+            }
+
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                var requests = from r in _context.Request select r;
+                return View(requests.Where(r => r.RequestNumber.Contains(search) 
+                || r.Note.Contains(search) 
+                || r.RequestDescription.Contains(search)
+                || r.PlaceOfWork.Contains(search)
+                || r.RepeatedRequest.Contains(search)
+                || r.ContractorNote.Contains(search)
+                ));
             }
 
             return View(await _context.Request.ToListAsync());
